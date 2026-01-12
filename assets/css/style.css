@@ -1,0 +1,388 @@
+/* General */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  scroll-behavior: smooth;
+}
+
+.section-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 60px 20px;
+}
+
+/* Navigation */
+nav {
+  background-color: #111;
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-container ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-container ul li a {
+  color: #fff;
+  transition: 0.3s;
+}
+
+.nav-container ul li a:hover,
+.nav-container ul li a.nav-link.active {
+  color: #00ffcc;
+}
+
+.nav-container .btn {
+  border: 1px solid #00ffcc;
+  padding: 5px 12px;
+  border-radius: 5px;
+  transition: 0.3s;
+  color: #00ffcc;
+}
+
+.nav-container .btn:hover {
+  background-color: #00ffcc;
+  color: #000;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  padding: 100px 20px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #00ffcc;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+  transition: transform 0.3s;
+}
+
+.hero-img:hover {
+  transform: scale(1.05);
+}
+
+.hero-content h1 {
+  margin: 0;
+  font-size: 2.8rem;
+  color: #00ffcc;
+  font-weight: 700;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.hero .btn {
+  margin-top: 15px;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #00ffcc;
+  color: #00ffcc;
+  transition: 0.3s;
+}
+
+.hero .btn:hover {
+  background: #00ffcc;
+  color: #000;
+  box-shadow: 0 0 15px #00ffcc;
+}
+
+/* About Section */
+.about-content {
+  margin-top: 30px;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.about-content strong {
+  color: #00ffcc;
+}
+
+/* Experience / Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.timeline-item {
+  background-color: #1a1a1a;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 255, 204, 0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
+}
+
+.timeline-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 255, 204, 0.5);
+}
+
+.timeline-date {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.timeline-item h3 {
+  margin: 0 0 8px 0;
+  color: #00ffcc;
+}
+
+.timeline-item p {
+  margin: 0;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+/* Skills */
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.skill-tag {
+  padding: 10px 18px;
+  border-radius: 25px;
+  background: linear-gradient(45deg, #00ffcc, #0099ff);
+  color: #000;
+  font-weight: 600;
+  transition: transform 0.3s;
+}
+
+.skill-tag:hover {
+  transform: scale(1.1);
+}
+.skills-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.skills-card {
+  background: #111;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #222;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.skills-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 18px rgba(0, 255, 204, 0.25);
+}
+
+.skills-card h3 {
+  margin-bottom: 15px;
+  color: #00ffcc;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.skills-card .skills-grid {
+  justify-content: center;
+}
+
+/* Projects */
+.projects-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.project-card {
+  background-color: #111;
+  border-radius: 10px;
+  padding: 15px;
+  width: 280px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px #00ffcc;
+}
+
+.project-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.project-tools {
+  font-size: 0.85rem;
+  color: #00ffcc;
+  margin: 5px 0 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+/* Make entire project card clickable */
+.project-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.project-card {
+  cursor: pointer;
+}
+
+
+/* Contact */
+.contact-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.contact-links a {
+  border: 1px solid #00ffcc;
+  padding: 10px 18px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #00ffcc;
+  transition: 0.3s;
+}
+
+.contact-links a:hover {
+  background-color: #00ffcc;
+  color: #000;
+  box-shadow: 0 0 12px #00ffcc;
+}
+
+/* Footer */
+footer {
+  padding: 20px 0;
+  margin-top: 40px;
+  border-top: 1px solid #222;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+/* Responsive */
+@media(min-width:768px){
+  .hero {
+    flex-direction: column; /* keep centered even on desktop */
+  }
+
+  .hero-content {
+    max-width: 600px;
+  }
+}
+
+/* Education & Certifications */
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.edu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.edu-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.edu-left {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.edu-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #111;
+  padding: 6px;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.35);
+}
+
+.edu-item h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #fff;
+}
+
+.edu-item p {
+  margin: 4px 0;
+  color: #00ffcc;
+  font-size: 0.95rem;
+}
+
+.edu-meta {
+  display: block;
+  margin-top: 4px;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.edu-courses {
+  display: block;
+  margin-top: 6px;
+  color: #888;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Certifications subtle separation */
+.edu-item.cert h3 {
+  font-weight: 500;
+}
+
+.edu-item.cert .edu-logo {
+  box-shadow: 0 0 12px rgba(0, 153, 255, 0.5);
+}
