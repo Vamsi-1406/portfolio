@@ -392,3 +392,80 @@ footer {
 .edu-item.cert .edu-logo {
   box-shadow: 0 0 12px rgba(0, 153, 255, 0.5);
 }
+/* --- MOBILE RESPONSIVE OVERRIDES --- */
+
+@media (max-width: 768px) {
+  /* 1. Tighten overall spacing */
+  .section-container {
+    padding: 40px 15px;
+  }
+
+  /* 2. Stack Navigation Items */
+  .nav-container {
+    flex-direction: column;
+    padding: 10px 0;
+  }
+
+  .nav-container ul {
+    margin-top: 10px;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-container h2 {
+    font-size: 1.1rem;
+  }
+
+  /* 3. Scale down Hero Section */
+  .hero {
+    padding: 40px 20px;
+  }
+
+  .hero-img {
+    width: 130px;
+    height: 130px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem; /* Avoids text overlapping or breaking weirdly */
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  /* 4. Projects: Stack cards vertically */
+  .projects-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .project-card {
+    width: 100%; /* Makes cards full width on mobile */
+    max-width: 320px;
+  }
+
+  /* 5. Skills: Ensure they wrap neatly */
+  .skills-categories {
+    grid-template-columns: 1fr; /* Single column for skill cards */
+    gap: 15px;
+  }
+
+  .skill-tag {
+    font-size: 0.85rem;
+    padding: 8px 14px;
+  }
+
+  /* 6. Contact: Make buttons easier to tap */
+  .contact-links {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .contact-links a {
+    width: 90%; /* Large touch targets for thumbs */
+    justify-content: center;
+  }
+}
