@@ -12,8 +12,4 @@ Personal portfolio showcasing my work in Data Analytics, BI, and Machine Learnin
 ## Live Demo
 🔗 https://vamsi-1406.github.io/portfolio/
 
-## Projects Highlighted
-- Hospitality Booking Analytics
-- Spotify Analytics Dashboard
-- Divvy Bike Share Analysis
-- Traffic Violation Detection System
+
