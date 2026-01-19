@@ -11,6 +11,20 @@
 </head>
 <body>
 
+  <!-- AI Assistant Announcement Banner -->
+  <div class="announcement-banner" id="aiBanner">
+    <div class="banner-content">
+      <div class="banner-text">
+        <span class="banner-icon">🎤</span>
+        <span class="banner-message">
+          <strong>NEW!</strong> Try my AI Voice Assistant - Ask me anything about my experience!
+          <span class="banner-cta">Click the microphone button →</span>
+        </span>
+      </div>
+      <button class="banner-close" id="closeBanner" aria-label="Close banner">&times;</button>
+    </div>
+  </div>
+
   <!-- Navigation -->
   <nav>
     <div class="nav-container">
@@ -487,6 +501,30 @@
       
       speechSynthesis.speak(utterance);
     }
+
+    // Banner dismissal functionality
+    const aiBanner = document.getElementById('aiBanner');
+    const closeBanner = document.getElementById('closeBanner');
+
+    // Check if banner was previously dismissed
+    const bannerDismissed = localStorage.getItem('aiBannerDismissed');
+
+    if (bannerDismissed === 'true') {
+      aiBanner.style.display = 'none';
+    }
+
+    closeBanner.addEventListener('click', () => {
+      aiBanner.style.display = 'none';
+      localStorage.setItem('aiBannerDismissed', 'true');
+    });
+
+    // Optional: When user clicks the voice trigger, dismiss the banner
+    voiceTrigger.addEventListener('click', () => {
+      if (aiBanner.style.display !== 'none') {
+        aiBanner.style.display = 'none';
+        localStorage.setItem('aiBannerDismissed', 'true');
+      }
+    });
   </script>
 
   <footer>
