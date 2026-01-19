@@ -118,8 +118,24 @@ exports.handler = async function(event, context) {
     }
 
     // Initialize Anthropic client with API key from environment variable
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+
+    // Debug: Check if API key exists (don't log the actual key!)
+    if (!apiKey) {
+      console.error('ANTHROPIC_API_KEY environment variable is not set');
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({
+          error: 'Server configuration error',
+          success: false,
+          answer: 'I apologize, but the server is not configured correctly. Please check the environment variables.'
+        })
+      };
+    }
+
     const anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY
+      apiKey: apiKey
     });
 
     // Call Anthropic API
