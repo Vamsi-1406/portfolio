@@ -475,31 +475,64 @@
     }
 
     function speak(text) {
+      // Cancel any ongoing speech
       speechSynthesis.cancel();
-      
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 1.0;
-      utterance.pitch = 1;
-      
-      utterance.onstart = () => {
-        isSpeaking = true;
-        stopButton.style.display = 'inline-block';
-        voiceStatus.textContent = '🔊 Speaking...';
+
+      // Mobile fix: Small delay before speaking
+      setTimeout(() => {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.0;
+        utterance.pitch = 1;
+        utterance.volume = 1.0;
+
+        // Mobile fix: Get voices and set a voice explicitly
+        const voices = speechSynthesis.getVoices();
+        if (voices.length > 0) {
+          // Try to find an English voice, otherwise use first available
+          const englishVoice = voices.find(voice => voice.lang.startsWith('en')) || voices[0];
+          utterance.voice = englishVoice;
+        }
+
+        utterance.onstart = () => {
+          isSpeaking = true;
+          stopButton.style.display = 'inline-block';
+          voiceStatus.textContent = '🔊 Speaking...';
+        };
+
+        utterance.onend = () => {
+          isSpeaking = false;
+          stopButton.style.display = 'none';
+          voiceStatus.textContent = 'Click mic to ask another question';
+        };
+
+        utterance.onerror = (event) => {
+          console.error('Speech synthesis error:', event);
+          isSpeaking = false;
+          stopButton.style.display = 'none';
+          voiceStatus.textContent = 'Speech unavailable on this device';
+        };
+
+        // Mobile fix: Resume audio context if needed
+        if (speechSynthesis.paused) {
+          speechSynthesis.resume();
+        }
+
+        speechSynthesis.speak(utterance);
+
+        // Mobile fix: Resume after a short delay (iOS specific issue)
+        setTimeout(() => {
+          if (speechSynthesis.paused) {
+            speechSynthesis.resume();
+          }
+        }, 100);
+      }, 100);
+    }
+
+    // Mobile fix: Load voices on page load
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = () => {
+        speechSynthesis.getVoices();
       };
-      
-      utterance.onend = () => {
-        isSpeaking = false;
-        stopButton.style.display = 'none';
-        voiceStatus.textContent = 'Click mic to ask another question';
-      };
-      
-      utterance.onerror = () => {
-        isSpeaking = false;
-        stopButton.style.display = 'none';
-        voiceStatus.textContent = 'Speech error';
-      };
-      
-      speechSynthesis.speak(utterance);
     }
 
     // Banner dismissal functionality
