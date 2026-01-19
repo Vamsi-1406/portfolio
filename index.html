@@ -20,7 +20,7 @@
         <li><a href="#skills" class="nav-link">Skills</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
-        <li><a href="assets/re/Vamsi_Mantravadi_Resume.pdf" target="_blank" class="btn">Resume</a></li>
+        <li><a href="assets/resume/Vamsi_Mantravadi_Resume.pdf" target="_blank" class="btn">Resume</a></li>
       </ul>
     </div>
   </nav>
@@ -29,9 +29,9 @@
   <header class="hero">
     <img src="assets/images/mjvk.jpg" alt="Vamsi Krishna" class="hero-img">
     <div class="hero-content">
-      <h1>Hi, I’m Vamsi 👋</h1>
+      <h1>Hi, I'm Vamsi 👋</h1>
       <p>I build analytics solutions and dashboards that turn complex data into actionable business insights.</p>
-      <a href="assets/re/Vamsi_Mantravadi_Resume.pdf" class="btn" download>Download Resume</a>
+      <a href="assets/resume/Vamsi_Mantravadi_Resume.pdf" class="btn" download>Download Resume</a>
 
     </div>
   </header>
@@ -40,7 +40,7 @@
   <section id="about" class="section-container">
     <h2>About Me</h2>
     <div class="about-content">
-      <p>I’m <strong>Mantravadi Jaya Vamsi Krishna</strong>, a <strong>Senior Data Analyst & BI Developer</strong> with 5+ years of experience transforming raw data into actionable insights. I specialize in building <strong>high-performance dashboards, ETL pipelines, and analytical models</strong> using <strong>Python, SQL, Power BI, Tableau, and Azure</strong>.</p>
+      <p>I'm <strong>Mantravadi Jaya Vamsi Krishna</strong>, a <strong>Senior Data Analyst & BI Developer</strong> with 5+ years of experience transforming raw data into actionable insights. I specialize in building <strong>high-performance dashboards, ETL pipelines, and analytical models</strong> using <strong>Python, SQL, Power BI, Tableau, and Azure</strong>.</p>
       <p>My work empowers teams to make confident business decisions, improves operational efficiency, and reduces manual workload through automation. I also mentor junior analysts and always ensure the data solutions I deliver are intuitive, accurate, and impactful.</p>
     </div>
   </section>
@@ -64,6 +64,7 @@
     </div>
 
     <div class="timeline-item">
+      <!-- <div class="timeline-date">2015 – 2019</div> -->
       <h3>GITAM University</h3>
       <p><strong>B.Tech in Computer Science</strong> · Visakhapatnam, India</p>
       <p>
@@ -284,18 +285,209 @@
   <!-- Contact -->
   <section id="contact" class="section-container">
     <h2>Contact Me</h2>
-    <p>Let’s connect! I’m open to opportunities and collaborations.</p>
+    <p>Let's connect! I'm open to opportunities and collaborations.</p>
     <div class="contact-links">
-    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vamsimantravadi99@gmail.com" target="_blank">
-    <i class="fa-solid fa-envelope"></i> Email
-    </a>
-
+      <a href="mailto:vamsimantravadi99@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
       <a href="https://wa.me/16605805265" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
 
       <a href="https://www.linkedin.com/in/vamsi-mantravadi" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
       <a href="https://github.com/Vamsi-1406" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
     </div>
   </section>
+
+  <!-- Voice Assistant Widget -->
+  <div class="voice-widget">
+    <button class="voice-trigger" id="voiceTrigger" title="Ask about my resume">
+      🎤
+    </button>
+    
+    <div class="voice-modal" id="voiceModal">
+      <div class="modal-header">
+        <h3>🎙️ Ask About My Resume</h3>
+        <button class="close-btn" id="closeModal">×</button>
+      </div>
+      
+      <div class="voice-status" id="voiceStatus">
+        Click the microphone to ask a question
+      </div>
+      
+      <div class="chat-messages" id="chatMessages"></div>
+      
+      <button class="mic-button" id="micButton">🎤</button>
+      <button class="stop-button" id="stopButton" style="display:none;">⏹ Stop</button>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = '/.netlify/functions/chat';
+    
+    const voiceTrigger = document.getElementById('voiceTrigger');
+    const voiceModal = document.getElementById('voiceModal');
+    const closeModal = document.getElementById('closeModal');
+    const micButton = document.getElementById('micButton');
+    const stopButton = document.getElementById('stopButton');
+    const voiceStatus = document.getElementById('voiceStatus');
+    const chatMessages = document.getElementById('chatMessages');
+    
+    let recognition;
+    let isListening = false;
+    let isSpeaking = false;
+
+    voiceTrigger.addEventListener('click', () => {
+      voiceModal.classList.toggle('active');
+    });
+
+    closeModal.addEventListener('click', () => {
+      voiceModal.classList.remove('active');
+      stopEverything();
+    });
+
+    function stopEverything() {
+      if (isSpeaking) {
+        speechSynthesis.cancel();
+        isSpeaking = false;
+      }
+      if (isListening && recognition) {
+        recognition.stop();
+      }
+      stopButton.style.display = 'none';
+      micButton.style.display = 'block';
+      voiceTrigger.classList.remove('listening');
+    }
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => {
+        isListening = true;
+        micButton.classList.add('active');
+        voiceTrigger.classList.add('listening');
+        voiceStatus.textContent = '🎧 Listening...';
+      };
+
+      recognition.onresult = async (event) => {
+        const transcript = event.results[0][0].transcript;
+        addMessage(transcript, 'user');
+        voiceStatus.textContent = '🤔 Thinking...';
+        showTyping();
+        
+        try {
+          const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: transcript })
+          });
+          
+          const data = await response.json();
+          hideTyping();
+          
+          if (data.success) {
+            addMessage(data.answer, 'bot');
+            speak(data.answer);
+          } else {
+            addMessage('Sorry, encountered an error.', 'bot');
+            voiceStatus.textContent = 'Error occurred';
+          }
+        } catch (error) {
+          hideTyping();
+          addMessage('Connection error. Make sure backend is running.', 'bot');
+          voiceStatus.textContent = 'Connection error';
+        }
+      };
+
+      recognition.onerror = (event) => {
+        isListening = false;
+        micButton.classList.remove('active');
+        voiceTrigger.classList.remove('listening');
+        voiceStatus.textContent = `Error: ${event.error}`;
+      };
+
+      recognition.onend = () => {
+        isListening = false;
+        micButton.classList.remove('active');
+        voiceTrigger.classList.remove('listening');
+        if (voiceStatus.textContent === '🎧 Listening...') {
+          voiceStatus.textContent = 'Click mic to ask again';
+        }
+      };
+
+      micButton.addEventListener('click', () => {
+        if (isListening) {
+          recognition.stop();
+        } else {
+          if (isSpeaking) {
+            speechSynthesis.cancel();
+            isSpeaking = false;
+            stopButton.style.display = 'none';
+          }
+          recognition.start();
+        }
+      });
+
+      stopButton.addEventListener('click', () => {
+        stopEverything();
+        voiceStatus.textContent = 'Stopped. Click mic to ask again';
+      });
+
+    } else {
+      voiceStatus.textContent = '❌ Speech not supported';
+      micButton.disabled = true;
+    }
+
+    function addMessage(text, type) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${type}-message`;
+      messageDiv.textContent = text;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTyping() {
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'typing';
+      typingDiv.id = 'typing';
+      typingDiv.innerHTML = '<span></span><span></span><span></span>';
+      chatMessages.appendChild(typingDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function hideTyping() {
+      const typingDiv = document.getElementById('typing');
+      if (typingDiv) typingDiv.remove();
+    }
+
+    function speak(text) {
+      speechSynthesis.cancel();
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.pitch = 1;
+      
+      utterance.onstart = () => {
+        isSpeaking = true;
+        stopButton.style.display = 'inline-block';
+        voiceStatus.textContent = '🔊 Speaking...';
+      };
+      
+      utterance.onend = () => {
+        isSpeaking = false;
+        stopButton.style.display = 'none';
+        voiceStatus.textContent = 'Click mic to ask another question';
+      };
+      
+      utterance.onerror = () => {
+        isSpeaking = false;
+        stopButton.style.display = 'none';
+        voiceStatus.textContent = 'Speech error';
+      };
+      
+      speechSynthesis.speak(utterance);
+    }
+  </script>
 
   <footer>
     <p>&copy; 2026 Mantravadi Jaya Vamsi Krishna. All rights reserved.</p>

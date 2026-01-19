@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: vamsi-voice-bot-api
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && python app.py
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false

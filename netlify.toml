@@ -1,0 +1,13 @@
+[build]
+  # No build command needed since this is a static site
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[functions]
+  # Set Node.js version
+  node_bundler = "esbuild"

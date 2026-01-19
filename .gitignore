@@ -1,0 +1,42 @@
+# Environment variables
+.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+voice-bot/backend/venv/
+voice-bot/backend/__pycache__/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Netlify
+.netlify/
+# Don't ignore netlify functions
+!netlify/functions/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+
+# Logs
+*.log
